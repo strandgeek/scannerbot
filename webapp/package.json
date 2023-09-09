@@ -27,6 +27,8 @@
     "sort-by": "^1.2.0"
   },
   "devDependencies": {
+    "@storybook/addon-styling": "^1.3.4",
+
     "@storybook/addon-essentials": "^7.1.1",
     "@storybook/addon-interactions": "^7.1.1",
     "@storybook/addon-links": "^7.1.1",
