@@ -4,5 +4,5 @@ dotenv.config();
 
 export default {
   JWT_SECRET: process.env.JWT_SECRET,
-  JWT_TOKEN_EXPIRATION: process.env.JWT_EXPIRATION || '30d',
+  JWT_TOKEN_EXPIRATION: process.env.JWT_TOKEN_EXPIRATION || '30d',
 };
