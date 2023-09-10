@@ -5,9 +5,14 @@ import { FormGroup } from "../../FormGroup";
 export interface TextFormInputProps {
   name: string;
   label: string;
+  type?: string;
 }
 
-export const TextFormInput: FC<TextFormInputProps> = ({ name, label }) => {
+export const TextFormInput: FC<TextFormInputProps> = ({
+  name,
+  label,
+  type = "text",
+}) => {
   const form = useFormContext();
   return (
     <FormGroup
@@ -15,7 +20,7 @@ export const TextFormInput: FC<TextFormInputProps> = ({ name, label }) => {
       name={name}
       label={label}
       type="input"
-      render={({ props }) => <input {...props} />}
+      render={({ props }) => <input {...props} type={type} />}
     />
   );
 };

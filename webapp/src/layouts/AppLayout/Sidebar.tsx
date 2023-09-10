@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Cog6ToothIcon, HomeIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import React, { FC, Fragment } from "react";
-import Logo from "../../assets/logo.png";
+import LogoSrc from "../../assets/scannerbot-logo-dark.png";
 import classNames from "classnames";
 import { Link, useLocation } from "react-router-dom";
 
@@ -30,7 +30,7 @@ export const Sidebar: FC<SidebarProps> = ({ open, setOpen }) => {
       <>
         <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
           <div className="flex-shrink-0 flex items-center px-4">
-            <img className="h-8 w-auto" src={Logo} alt="Workflow" />
+            <img className="h-6 w-auto" src={LogoSrc} alt="Workflow" />
           </div>
           <nav className="mt-5 px-2 space-y-1">
             {navigation.map((item) => (

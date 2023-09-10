@@ -1,5 +1,5 @@
-import daisyui from 'daisyui';
-import defaultTheme from 'daisyui/src/theming/themes';
+import daisyui from "daisyui";
+import defaultTheme from "daisyui/src/theming/themes";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -11,17 +11,15 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [
-    daisyui,
-  ],
+  plugins: [daisyui],
   daisyui: {
     themes: [
       {
         light: {
           ...defaultTheme["[data-theme=light]"],
-          "primary": "#1d4ed8",
+          primary: "#263151",
         },
       },
     ],
   },
-}
+};
