@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'src/prisma.service';
 import * as bcrypt from 'bcrypt';
-import { User as UserDB } from '@prisma/client';
+import { Prisma, User as UserDB } from '@prisma/client';
 import { User } from './entities/User';
 
 export const getUserEntity = (user: UserDB): User => {
@@ -28,15 +28,22 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const { firstName, lastName, email, password } = createUserDto;
-    return getUserEntity(
-      await this.prismaService.user.create({
-        data: {
-          firstName,
-          lastName,
-          email,
-          passwordHash: await bcrypt.hash(password, 10),
-        },
-      }),
-    );
+    try {
+      return getUserEntity(
+        await this.prismaService.user.create({
+          data: {
+            firstName,
+            lastName,
+            email,
+            passwordHash: await bcrypt.hash(password, 10),
+          },
+        }),
+      );
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new BadRequestException('User already exists');
+      }
+      throw error;
+    }
   }
 }
