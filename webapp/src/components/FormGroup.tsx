@@ -5,24 +5,25 @@ import {
   FieldErrors,
   FieldValues,
   Path,
+  RegisterOptions,
   UseFormRegisterReturn,
   UseFormReturn,
 } from "react-hook-form";
 
 const TYPE_CLASSES = {
   input: {
-    base: 'input input-bordered',
-    error: 'input-error text-error',
+    base: "input input-bordered",
+    error: "input-error text-error",
   },
   textarea: {
-    base: 'textarea textarea-bordered',
-    error: 'textarea-error text-error',
+    base: "textarea textarea-bordered",
+    error: "textarea-error text-error",
   },
   select: {
-    base: 'select select-bordered',
-    error: 'select-error text-error',
+    base: "select select-bordered",
+    error: "select-error text-error",
   },
-}
+};
 
 export interface FormGroupRenderArgsProps<TName extends string>
   extends UseFormRegisterReturn<TName> {
@@ -41,6 +42,7 @@ export interface FormGroupProps<T extends FieldValues> {
   label: string;
   type?: keyof typeof TYPE_CLASSES;
   render: (args: FormGroupRenderArgs<T>) => React.ReactNode;
+  options?: RegisterOptions;
 }
 
 export function FormGroup<T extends FieldValues>({
@@ -49,6 +51,7 @@ export function FormGroup<T extends FieldValues>({
   label,
   type,
   render,
+  options,
 }: FormGroupProps<T>) {
   const {
     register,
@@ -82,7 +85,7 @@ export function FormGroup<T extends FieldValues>({
       </label>
       {render({
         props: {
-          ...register(name),
+          ...register(name, options),
           id,
           className,
         },

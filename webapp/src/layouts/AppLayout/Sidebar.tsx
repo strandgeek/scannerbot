@@ -1,5 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Cog6ToothIcon, HomeIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import {
+  BriefcaseIcon,
+  Cog6ToothIcon,
+  DocumentMagnifyingGlassIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
 import React, { FC, Fragment } from "react";
 import LogoSrc from "../../assets/scannerbot-logo-dark.png";
 import classNames from "classnames";
@@ -12,9 +17,14 @@ export interface SidebarProps {
 
 const navigation = [
   {
-    name: "Dashboard",
+    name: "Scans",
+    path: "/app/scans",
+    icon: DocumentMagnifyingGlassIcon,
+  },
+  {
+    name: "Projects",
     path: "/app",
-    icon: HomeIcon,
+    icon: BriefcaseIcon,
   },
   {
     name: "Settings",

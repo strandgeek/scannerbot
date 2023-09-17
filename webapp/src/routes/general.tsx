@@ -5,6 +5,9 @@ import { PATHS } from "../consts/paths";
 import { IndexPage } from "../pages/Index";
 import { AppIndexPage } from "../pages/app/Index";
 import { AppLoginPage } from "../pages/app/Login";
+import { AppSignupPage } from "../pages/app/Signup";
+import { AppProjectsPage } from "../pages/app/Projects";
+import { AppProjectsCreate } from "../pages/app/ProjectsCreate";
 
 export const general: RouteObject[] = [
   // ROUTES - START
@@ -19,6 +22,18 @@ export const general: RouteObject[] = [
   {
     path: PATHS.appLogin,
     element: <AppLoginPage />,
+  },
+  {
+    path: PATHS.appSignup,
+    element: <AppSignupPage />,
+  },
+  {
+    path: "/app/projects",
+    element: <AppProjectsPage />,
+  },
+  {
+    path: "/app/projects/create",
+    element: <AppProjectsCreate />,
   },
   // ROUTES - END
 ];

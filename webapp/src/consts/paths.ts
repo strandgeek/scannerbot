@@ -3,5 +3,6 @@ export const PATHS = {
   index: '/',
   app: '/app',
   appLogin: '/app/login',
+  appSignup: '/app/signup',
   // PATHS - END
 } as const;
