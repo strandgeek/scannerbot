@@ -23,7 +23,7 @@ const navigation = [
   },
   {
     name: "Projects",
-    path: "/app",
+    path: "/app/projects",
     icon: BriefcaseIcon,
   },
   {

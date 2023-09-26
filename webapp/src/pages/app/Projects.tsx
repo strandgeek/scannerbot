@@ -23,7 +23,9 @@ export const AppProjectsPage: FC = () => {
         </div>
       </div>
       {projectsData?.data.map((project) => (
-        <ProjectCard project={project} />
+        <div className="mt-4">
+          <ProjectCard project={project} />
+        </div>
       ))}
     </AppLayout>
   );

@@ -1,4 +1,8 @@
-import { DocumentMagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import {
+  CodeBracketIcon,
+  DocumentMagnifyingGlassIcon,
+  EllipsisVerticalIcon,
+} from "@heroicons/react/24/outline";
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { FC } from "react";
 import { Link } from "react-router-dom";
@@ -19,9 +23,21 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
     <div className="border rounded shadow-sm">
       <div className="p-4 flex justify-between items-center">
         <div className="font-semibold">{project.name}</div>
-        <button className="btn btn-square btn-ghost btn-sm">
-          <Cog6ToothIcon className="w-5 h-5 text-base-content/50" />
-        </button>
+        <div className="dropdown dropdown-bottom dropdown-end">
+          <label tabIndex={0} className="btn btn-square btn-ghost btn-sm">
+            <EllipsisVerticalIcon className="w-5 h-5 text-base-content/50" />
+          </label>
+          <ul
+            tabIndex={0}
+            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            <li>
+              <Link to={`/app/projects/${project.id}/setup`}>
+                <CodeBracketIcon className="h-4 w-4" /> Setup Instructions
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
       <div className="p-4 border-t">
         <div className="w-full flex">

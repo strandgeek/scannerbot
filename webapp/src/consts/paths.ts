@@ -4,5 +4,6 @@ export const PATHS = {
   app: '/app',
   appLogin: '/app/login',
   appSignup: '/app/signup',
+  appProjects: '/app/projects',
   // PATHS - END
 } as const;

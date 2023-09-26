@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { createProject } from "../../client/mutations/projects";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../consts/paths";
 
 export interface AppProjectsCreateProps {}
 
@@ -14,14 +16,16 @@ export interface CreateProjectVars {
 }
 
 export const AppProjectsCreate: FC<AppProjectsCreateProps> = (props) => {
+  const navigate = useNavigate();
   const form = useForm<CreateProjectVars>();
   const createPostMutation = useMutation({
     mutationKey: ["createProject"],
     mutationFn: (args: CreateProjectVars) => createProject(args),
   });
   const onSubmit = async (data: CreateProjectVars) => {
-    const project = await createPostMutation.mutateAsync(data);
+    await createPostMutation.mutateAsync(data);
     toast.success("Project Created!");
+    navigate(PATHS.appProjects);
   };
   return (
     <AppLayout>
