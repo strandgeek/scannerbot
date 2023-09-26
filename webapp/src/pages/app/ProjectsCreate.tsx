@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { FC } from "react";
+import { FC } from "react";
 import { AppLayout } from "../../layouts/AppLayout";
 import { CreateProjectForm } from "../../components/forms/CreateProjectForm";
 import { useForm } from "react-hook-form";
