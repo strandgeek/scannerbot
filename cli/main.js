@@ -7,16 +7,16 @@ const axios = require("axios");
 const { globSync } = require("glob");
 
 const BASE_URL = "https://scannerbot.xyz";
-const projectKey = yargs.argv["project-key"];
+const projectToken = yargs.argv["project-token"];
 
 const package = JSON.parse(fs.readFileSync("package.json", "utf8"));
 
 console.log(`ScannerBot CLI V${package.version}\n`);
 
-if (!projectKey) {
-  console.log(chalk.red("Error: Flag --project-key is required"));
+if (!projectToken) {
+  console.log(chalk.red("Error: Flag --project-token is required"));
   console.log("\nUsage:");
-  console.log(" $ npx @scannerbot/cli --project-key <PROJECT_KEY>\n");
+  console.log(" $ npx @scannerbot/cli --project-token <PROJECT_KEY>\n");
   process.exit(1);
 }
 
@@ -40,14 +40,19 @@ solFilePaths.forEach((filePath) => {
 });
 
 client
-  .post("/scan", { files }, { params: { project_key: projectKey } })
+  .post("/scans", { files }, { params: { project_token: projectToken } })
   .then((res) => {
-    console.log(res);
+    console.log(chalk.green("Scan execution is processing\n"));
+    console.log(
+      "You can follow the scan progress at this link: " +
+        chalk.bold(res.data.url) +
+        "\n"
+    );
     process.exit(0);
   })
   .catch((err) => {
     console.log(
-      chalk.red("Failed to execute scan. HTTP status " + err.response.status)
+      chalk.red("Failed to execute scan: " + err.response.data.message)
     );
     process.exit(1);
   });

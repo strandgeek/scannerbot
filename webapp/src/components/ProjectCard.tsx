@@ -20,7 +20,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
     queryFn: () => getProjectScansInfo(project.id),
   });
   return (
-    <div className="border rounded shadow-sm">
+    <div className="border rounded shadow-sm bg-white">
       <div className="p-4 flex justify-between items-center">
         <div className="font-semibold">{project.name}</div>
         <div className="dropdown dropdown-bottom dropdown-end">

@@ -3,6 +3,9 @@ import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { PrismaService } from 'src/prisma.service';
 import { PaginatorOptions, paginator } from 'src/common/helpers/paginator';
+import { randomBytes } from 'crypto';
+
+const generateProjectToken = () => randomBytes(32).toString('hex');
 
 @Injectable()
 export class ProjectsService {
@@ -10,12 +13,12 @@ export class ProjectsService {
 
   create(ownerId: string, createProjectDto: CreateProjectDto) {
     const { name } = createProjectDto;
-    const accessToken = Math.random().toString(36).substr(2);
+    const projectToken = generateProjectToken();
     return this.prismaService.project.create({
       data: {
         name,
         ownerId,
-        accessToken,
+        projectToken,
       },
     });
   }
@@ -38,6 +41,14 @@ export class ProjectsService {
       where: {
         ownerId,
         id,
+      },
+    });
+  }
+
+  findOneByProjectToken(projectToken: string) {
+    return this.prismaService.project.findUnique({
+      where: {
+        projectToken,
       },
     });
   }

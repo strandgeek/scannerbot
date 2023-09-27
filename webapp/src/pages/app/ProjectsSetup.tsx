@@ -54,7 +54,7 @@ export const AppProjectsSetup: FC<AppProjectsSetupProps> = (props) => {
           from ScannerBot CLI.
           <label className="block mt-4 font-semibold">Project Token:</label>
           <input
-            value={data?.accessToken}
+            value={data?.projectToken}
             className="input input-bordered bg-black text-white mt-4 w-full text-sm"
           />
         </Step>
@@ -64,7 +64,7 @@ export const AppProjectsSetup: FC<AppProjectsSetupProps> = (props) => {
           directory.
           <div className="bg-black text-white mt-4 w-full p-3 rounded-lg text-sm">
             npx @strandgeek/scannerbot --project-token{" "}
-            <strong className="text-white">{data?.accessToken}</strong>
+            <strong className="text-white">{data?.projectToken}</strong>
           </div>
           <div className="alert mt-2">
             <LightBulbIcon className="w-4 h-4 text-yellow-400" />

@@ -20,9 +20,28 @@ model User {
 }
 
 model Project {
-  id          String @id @default(uuid())
-  ownerId     String
-  owner       User   @relation(fields: [ownerId], references: [id])
-  name        String
-  accessToken String
+  id           String        @id @default(uuid())
+  ownerId      String
+  owner        User          @relation(fields: [ownerId], references: [id])
+  name         String
+  projectToken String        @unique
+  ProjectScan  ProjectScan[]
+}
+
+model ProjectScan {
+  id        String            @id @default(uuid())
+  projectId String
+  project   Project           @relation(fields: [projectId], references: [id])
+  status    ProjectScanStatus @default(SCHEDULED)
+  input     Json?
+  output    Json?
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+enum ProjectScanStatus {
+  SCHEDULED
+  RUNNING
+  COMPLETED
+  ERROR
 }

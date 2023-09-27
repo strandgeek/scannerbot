@@ -9,6 +9,7 @@ import { AppSignupPage } from "../pages/app/Signup";
 import { AppProjectsPage } from "../pages/app/Projects";
 import { AppProjectsCreate } from "../pages/app/ProjectsCreate";
 import { AppProjectsSetup } from "../pages/app/ProjectsSetup";
+import { Scans } from "../pages/app/Scans";
 
 export const general: RouteObject[] = [
   // ROUTES - START
@@ -39,6 +40,10 @@ export const general: RouteObject[] = [
   {
     path: "/app/projects/create",
     element: <AppProjectsCreate />,
+  },
+  {
+    path: "/app/scans",
+    element: <Scans />,
   },
   // ROUTES - END
 ];
