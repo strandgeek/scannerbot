@@ -1,0 +1,36 @@
+import { Injectable } from '@nestjs/common';
+import {
+  ScannerBaseProvider,
+  ScannerBaseProviderInput,
+  ScannerBaseProviderScanResult,
+} from './scanner.base-provider';
+import { SlitherProvider } from './providers/SlitherProvider';
+
+interface ScannerResult {
+  providers: {
+    name: string;
+    result: ScannerBaseProviderScanResult;
+  }[];
+}
+
+const PROVIDERS: { [name: string]: typeof ScannerBaseProvider } = {
+  slither: SlitherProvider,
+};
+
+@Injectable()
+export class ScannerService {
+  async scan(input: ScannerBaseProviderInput): Promise<ScannerResult> {
+    const providers = await Promise.all(
+      Object.keys(PROVIDERS).map(async (providerName) => {
+        const provider = new PROVIDERS[providerName](input);
+        return {
+          name: providerName,
+          result: await provider.scan(),
+        };
+      }),
+    );
+    return {
+      providers,
+    };
+  }
+}

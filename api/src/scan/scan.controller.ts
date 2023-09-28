@@ -36,7 +36,7 @@ export class ScanController {
         'project not found for provided project token',
       );
     }
-    const projectScan = await this.scanService.createScheduledScan({
+    const projectScan = await this.scanService.createScan({
       projectId: project.id,
       input,
     });
