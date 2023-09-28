@@ -10,6 +10,11 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { a11yDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { createElement } from "react-syntax-highlighter";
 import classNames from "classnames";
+import {
+  ProjectScanOutputProviderImpact,
+  ProjectScanOutputProviderScanResultItem,
+} from "../../types/projectScan";
+import { ExclamationCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 
 export interface ScanByIdProps {}
 
@@ -22,9 +27,58 @@ export const ScanById: FC<ScanByIdProps> = (props) => {
   const totalFiles = useMemo(() => {
     return projectScan?.input?.files?.length || 0;
   }, [projectScan]);
+  const fileItems = useMemo(() => {
+    const map: {
+      [filename: string]: ProjectScanOutputProviderScanResultItem[];
+    } = {};
+    if (!projectScan || !projectScan.output?.providers) {
+      return map;
+    }
+    const { providers } = projectScan.output;
+    providers.forEach((provider) => {
+      provider.result.items.forEach((item) => {
+        if (item.file) {
+          const path = (item.file.path || "").replace("files/", "");
+          if (!map[path]) {
+            map[path] = [];
+          }
+          map[path].push(item);
+        }
+      });
+    });
+    return map;
+  }, [projectScan]);
+  const fileLineImpact = useMemo(() => {
+    const map: {
+      [filename: string]: { [line: number]: ProjectScanOutputProviderImpact };
+    } = {};
+    if (!projectScan || !projectScan.output?.providers) {
+      return map;
+    }
+    const { providers } = projectScan.output;
+    ["OPTIMIZATION", "INFORMATIONAL", "LOW", "MEDIUM", "HIGH"].forEach(
+      (impact) => {
+        providers.forEach((provider) => {
+          provider.result.items
+            .filter((item) => item.impact === impact && item.file)
+            .forEach((item) => {
+              item.file?.lines?.forEach((line) => {
+                const path = (item.file!.path || "").replace("files/", "");
+                if (!map[path]) {
+                  map[path] = {};
+                }
+                map[path][line] = impact as ProjectScanOutputProviderImpact;
+              });
+            });
+        });
+      }
+    );
+    return map;
+  }, [projectScan]);
   if (!projectScan) {
     return;
   }
+  console.log(fileLineImpact);
   return (
     <AppLayout container={false}>
       <div className="border rounded shadow-sm bg-white hover:bg-slate-50 hover:cursor-pointer">
@@ -67,11 +121,21 @@ export const ScanById: FC<ScanByIdProps> = (props) => {
                     wrapLines={true}
                     renderer={(props) => (
                       <div>
-                        {props.rows.map((row, idx) => {
+                        {props.rows.map((row, idx: number) => {
+                          const impact =
+                            fileLineImpact && fileLineImpact[file.path]
+                              ? fileLineImpact[file.path][idx + 1]
+                              : null;
                           return (
                             <div
                               className={classNames({
-                                "bg-red-600/80": idx === 5,
+                                "bg-red-600/40": impact === "HIGH",
+                                "bg-yellow-600/40": impact === "MEDIUM",
+                                "bg-gray-600/40": [
+                                  "LOW",
+                                  "OPTIMIZATION",
+                                  "INFORMATIONAL",
+                                ].includes(impact || ""),
                               })}
                             >
                               {createElement({
@@ -88,6 +152,29 @@ export const ScanById: FC<ScanByIdProps> = (props) => {
                   >
                     {file.source}
                   </SyntaxHighlighter>
+                </div>
+                <div className="p-8">
+                  {fileItems &&
+                    fileItems[file.path] &&
+                    fileItems[file.path].map((item) => {
+                      return (
+                        <div className="text-red-500 border border-red-500 rounded-lg p-4 mb-4">
+                          <div className="flex">
+                            <ExclamationCircleIcon className="w-6 h-6" />
+                            <div className="font-bold ml-1">High Impact</div>
+                          </div>
+                          <div
+                            className="pl-7 pt-2"
+                            dangerouslySetInnerHTML={{
+                              __html: item.description.replace(
+                                /(?:\r\n|\r|\n)/g,
+                                "<br /><br />"
+                              ),
+                            }}
+                          ></div>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             );
