@@ -1,15 +1,18 @@
 import React, { FC, useState } from "react";
-import {
-  Bars3Icon,
-} from "@heroicons/react/24/outline";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 import { Sidebar } from "./Sidebar";
 
 export interface AppLayoutProps {
   title?: string;
   children?: React.ReactNode;
+  container?: boolean;
 }
 
-export const AppLayout: FC<AppLayoutProps> = ({ children, title }) => {
+export const AppLayout: FC<AppLayoutProps> = ({
+  children,
+  title,
+  container = true,
+}) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <div className="h-screen flex overflow-hidden bg-base-200">
@@ -25,18 +28,20 @@ export const AppLayout: FC<AppLayoutProps> = ({ children, title }) => {
           </button>
         </div>
         <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none">
-          <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h1 className="text-2xl font-semibold text-gray-900">
-                {title}
-              </h1>
-            </div>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <div className="py-4">
-                {children}
+          {container ? (
+            <div className="py-6">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 className="text-2xl font-semibold text-gray-900">
+                  {title}
+                </h1>
+              </div>
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                <div className="py-4">{children}</div>
               </div>
             </div>
-          </div>
+          ) : (
+            children
+          )}
         </main>
       </div>
     </div>

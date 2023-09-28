@@ -28,11 +28,24 @@ interface ProjectScanOutput {
 }
 
 
+export interface ProjectScanInputFile {
+  path: string
+  source: string
+}
+
+export interface ProjectScanInput {
+  files: ProjectScanInputFile[]
+}
+
+
+
+
 export interface ProjectScan {
   id: string;
   createdAt: string;
   updatedAt: string;
   status: string;
   project?: Project;
+  input?: ProjectScanInput;
   output?: ProjectScanOutput;
 }
