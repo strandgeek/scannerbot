@@ -3,7 +3,6 @@ import {
   DocumentMagnifyingGlassIcon,
   EllipsisVerticalIcon,
 } from "@heroicons/react/24/outline";
-import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Project } from "../types/project";

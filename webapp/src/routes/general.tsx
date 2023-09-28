@@ -10,6 +10,7 @@ import { AppProjectsPage } from "../pages/app/Projects";
 import { AppProjectsCreate } from "../pages/app/ProjectsCreate";
 import { AppProjectsSetup } from "../pages/app/ProjectsSetup";
 import { Scans } from "../pages/app/Scans";
+import { ScanById } from "../pages/app/ScanById";
 
 export const general: RouteObject[] = [
   // ROUTES - START
@@ -44,6 +45,10 @@ export const general: RouteObject[] = [
   {
     path: "/app/scans",
     element: <Scans />,
+  },
+  {
+    path: "/app/scans/:scanId",
+    element: <ScanById />,
   },
   // ROUTES - END
 ];
