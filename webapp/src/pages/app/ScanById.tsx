@@ -14,11 +14,11 @@ import {
   ProjectScanOutputProviderImpact,
   ProjectScanOutputProviderScanResultItem,
 } from "../../types/projectScan";
-import { ExclamationCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { SeverityAlert } from "../../components/SeverityAlert";
 
 export interface ScanByIdProps {}
 
-export const ScanById: FC<ScanByIdProps> = (props) => {
+export const ScanById: FC<ScanByIdProps> = () => {
   const { scanId } = useParams();
   const { data: projectScan } = useQuery({
     queryKey: ["projectScanById", scanId],
@@ -158,21 +158,10 @@ export const ScanById: FC<ScanByIdProps> = (props) => {
                     fileItems[file.path] &&
                     fileItems[file.path].map((item) => {
                       return (
-                        <div className="text-red-500 border border-red-500 rounded-lg p-4 mb-4">
-                          <div className="flex">
-                            <ExclamationCircleIcon className="w-6 h-6" />
-                            <div className="font-bold ml-1">High Impact</div>
-                          </div>
-                          <div
-                            className="pl-7 pt-2"
-                            dangerouslySetInnerHTML={{
-                              __html: item.description.replace(
-                                /(?:\r\n|\r|\n)/g,
-                                "<br /><br />"
-                              ),
-                            }}
-                          ></div>
-                        </div>
+                        <SeverityAlert
+                          type={item.impact}
+                          content={item.description}
+                        />
                       );
                     })}
                 </div>
