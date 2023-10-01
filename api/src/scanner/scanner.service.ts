@@ -4,7 +4,8 @@ import {
   ScannerBaseProviderInput,
   ScannerBaseProviderScanResult,
 } from './scanner.base-provider';
-import { SlitherProvider } from './providers/SlitherProvider';
+import { SlitherProvider } from './providers/slither.provider';
+import { TronConstantsProvider } from './providers/tron-constants.provider';
 
 interface ScannerResult {
   providers: {
@@ -15,6 +16,7 @@ interface ScannerResult {
 
 const PROVIDERS: { [name: string]: typeof ScannerBaseProvider } = {
   slither: SlitherProvider,
+  tron_constants: TronConstantsProvider,
 };
 
 @Injectable()
