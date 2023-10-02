@@ -4,12 +4,14 @@ import { ScanInput } from './scan.types';
 import { Prisma } from '@prisma/client';
 import { PaginatorOptions, paginator } from 'src/common/helpers/paginator';
 import { ScannerService } from 'src/scanner/scanner.service';
+import { AiService } from 'src/ai/ai.service';
 
 @Injectable()
 export class ScanService {
   constructor(
     private prismaService: PrismaService,
     private scannerService: ScannerService,
+    private aiService: AiService,
   ) { }
   async createScan({
     projectId,
@@ -27,16 +29,24 @@ export class ScanService {
       },
     });
     const scanResult = await this.scannerService.scan({
+      // TODO: Use solcVersion configured on project here
       solcVersion: '0.5.10',
       scanId: scan.id,
       files: input.files,
     });
+    const aiResult = await this.aiService.generateInsightsFromScanResult(
+      input.files,
+      scanResult,
+    );
     await this.prismaService.projectScan.update({
       where: {
         id: scan.id,
       },
       data: {
-        output: scanResult as unknown as Prisma.JsonObject,
+        output: {
+          providers: scanResult.providers,
+          insights: aiResult.insights,
+        } as unknown as Prisma.JsonObject,
         status: 'COMPLETED',
       },
     });

@@ -9,12 +9,14 @@ import { ProjectScanStats } from "../../components/ProjectScanStats";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { a11yDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { createElement } from "react-syntax-highlighter";
+import Markdown from "react-markdown";
 import classNames from "classnames";
 import {
   ProjectScanOutputProviderImpact,
   ProjectScanOutputProviderScanResultItem,
 } from "../../types/projectScan";
 import { SeverityAlert } from "../../components/SeverityAlert";
+import InsightIcon from "../../assets/scannerbot-icon.png";
 
 export interface ScanByIdProps {}
 
@@ -75,6 +77,18 @@ export const ScanById: FC<ScanByIdProps> = () => {
     );
     return map;
   }, [projectScan]);
+  const fileInsights = useMemo(() => {
+    const map: {
+      [filename: string]: string;
+    } = {};
+    if (!projectScan || !projectScan.output?.insights) {
+      return map;
+    }
+    projectScan.output.insights.forEach((insight) => {
+      map[insight.file.path] = insight.content;
+    });
+    return map;
+  }, [projectScan]);
   if (!projectScan) {
     return;
   }
@@ -112,8 +126,8 @@ export const ScanById: FC<ScanByIdProps> = () => {
           {(projectScan.input?.files || []).map((file) => {
             return (
               <div className="m-4 bg-white border rounded overflow-hidden">
-                <div className="p-4">{file.path}</div>
-                <div className="p-4 border">
+                <div className="p-4 font-semibold bg-white">{file.path}</div>
+                <div className="p-4 border bg-gray-50/2">
                   <SyntaxHighlighter
                     language="solidity"
                     style={a11yDark}
@@ -164,6 +178,19 @@ export const ScanById: FC<ScanByIdProps> = () => {
                         />
                       );
                     })}
+                  {fileInsights[file.path] && (
+                    <div className="rounded-lg p-4 mb-4 border border-primary">
+                      <div className="flex items-center">
+                        <img className="w-6 h-6 mr-2" src={InsightIcon} />
+                        <div className="font-bold text-primary">
+                          AI Insights
+                        </div>
+                      </div>
+                      <div className="pl-7 pt-2 w-full max-w-full prose prose-h1:text-lg prose-h2:text-base prose-h3:text-base prose-h4:text-sm">
+                        <Markdown>{fileInsights[file.path]}</Markdown>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             );

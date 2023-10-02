@@ -25,6 +25,12 @@ interface ProjectScanOutput {
     name: string;
     result: ProjectScanOutputProviderScanResult;
   }[];
+  insights: {
+    file: {
+      path: string;
+    };
+    content: string;
+  }[];
 }
 
 

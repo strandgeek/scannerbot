@@ -7,7 +7,7 @@ import {
 import { SlitherProvider } from './providers/slither.provider';
 import { TronConstantsProvider } from './providers/tron-constants.provider';
 
-interface ScannerResult {
+export interface ScannerResult {
   providers: {
     name: string;
     result: ScannerBaseProviderScanResult;

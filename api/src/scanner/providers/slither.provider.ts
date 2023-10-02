@@ -11,6 +11,27 @@ const exec = util.promisify(child_process.exec);
 
 const TMP_PATH = './tmp/silther';
 
+/**
+ * Even using the solc for TVM, the slipher scan description comes with the EVM denominations (ether, ETH, EVM, etc).
+ *
+ * So we are replacing it to TRON ecosystem.
+ * TODO: Open PR on slipher to add a possibility to customize the denomination symbol and terms on descriptions.
+ */
+const DENOMINATIONS = [
+  {
+    match: /ether/g,
+    replace: 'sun',
+  },
+  {
+    match: /ETH/g,
+    replace: 'TRX',
+  },
+  {
+    match: /EVM/g,
+    replace: 'TVM',
+  },
+];
+
 export class SlitherProvider extends ScannerBaseProvider {
   private getScanFolder() {
     return path.join(TMP_PATH, this.input.scanId);
@@ -26,10 +47,7 @@ export class SlitherProvider extends ScannerBaseProvider {
     const { files } = this.input;
     return Promise.all(
       files.map((file) =>
-        fs.outputFile(
-          path.join(this.getScanFolder(), 'files', file.path),
-          file.source,
-        ),
+        fs.outputFile(path.join(this.getScanFolder(), file.path), file.source),
       ),
     );
   }
@@ -38,7 +56,7 @@ export class SlitherProvider extends ScannerBaseProvider {
     try {
       const { solcVersion } = this.input;
       await exec(
-        `slither ./files/contracts --json output.json --solc-solcs-select ${solcVersion}`,
+        `slither ./contracts --json output.json --solc-solcs-select ${solcVersion}`,
         {
           cwd: this.getScanFolder(),
         },
@@ -51,6 +69,14 @@ export class SlitherProvider extends ScannerBaseProvider {
       'utf8',
     );
     return JSON.parse(outputJson);
+  }
+
+  private replaceDenomination(text: string): string {
+    let replaced: string = text;
+    DENOMINATIONS.forEach((d) => {
+      replaced = replaced.replace(d.match, d.replace);
+    });
+    return replaced;
   }
 
   async scan(): Promise<ScannerBaseProviderScanResult> {
@@ -70,7 +96,7 @@ export class SlitherProvider extends ScannerBaseProvider {
               lines: element.source_mapping.lines || [],
             }
             : null,
-          description: detector.description,
+          description: this.replaceDenomination(detector.description),
           impact: detector.impact.toUpperCase(),
         };
         return item;

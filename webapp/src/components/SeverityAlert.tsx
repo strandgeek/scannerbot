@@ -48,8 +48,8 @@ export const SeverityAlert: FC<SeverityAlertProps> = ({ type, content }) => {
   const alert = ALERT_TYPES[type];
   return (
     <div className={classNames("rounded-lg p-4 mb-4", alert.className)}>
-      <div className="flex">
-        {alert.icon}
+      <div className="flex items-center">
+        <div>{alert.icon}</div>
         <div className="font-bold ml-1">{alert.title}</div>
       </div>
       <div
