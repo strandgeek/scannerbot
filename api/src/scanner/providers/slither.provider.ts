@@ -56,7 +56,7 @@ export class SlitherProvider extends ScannerBaseProvider {
     try {
       const { solcVersion } = this.input;
       await exec(
-        `slither ./contracts --json output.json --solc-solcs-select ${solcVersion}`,
+        `slither ./contracts --json output.json --solc=../../../compilers/tron/solc.js --solc-args="--solc-version ${solcVersion}"`,
         {
           cwd: this.getScanFolder(),
         },

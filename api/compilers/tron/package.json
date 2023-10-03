@@ -1,0 +1,16 @@
+{
+  "name": "scannerbot-tron-solc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "solc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^10.3.10",
+    "solc": "^0.8.21",
+    "yargs": "^17.7.2"
+  }
+}
