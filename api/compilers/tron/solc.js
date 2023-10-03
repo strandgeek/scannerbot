@@ -70,6 +70,12 @@ const input = {
 
 const output = JSON.parse(solc.compile(JSON.stringify(input)));
 
+fs.writeFileSync('compilationOutput.json', JSON.stringify(output, null, 4));
+
+if (output.errors && output.errors.length > 0) {
+  process.exit(1);
+}
+
 Object.keys(output.sources).forEach((sourceKey) => {
   output.sources[sourceKey].AST = output.sources[sourceKey].ast;
   output.sources[sourceKey].ast = undefined;

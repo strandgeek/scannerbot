@@ -31,6 +31,7 @@ interface ProjectScanOutput {
     };
     content: string;
   }[];
+  error?: string;
 }
 
 

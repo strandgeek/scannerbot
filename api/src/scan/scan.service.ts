@@ -28,28 +28,42 @@ export class ScanService {
         status: 'SCHEDULED',
       },
     });
-    const scanResult = await this.scannerService.scan({
-      // TODO: Use solcVersion configured on project here
-      solcVersion: '0.5.10',
-      scanId: scan.id,
-      files: input.files,
-    });
-    const aiResult = await this.aiService.generateInsightsFromScanResult(
-      input.files,
-      scanResult,
-    );
-    await this.prismaService.projectScan.update({
-      where: {
-        id: scan.id,
-      },
-      data: {
-        output: {
-          providers: scanResult.providers,
-          insights: aiResult.insights,
-        } as unknown as Prisma.JsonObject,
-        status: 'COMPLETED',
-      },
-    });
+    try {
+      const scanResult = await this.scannerService.scan({
+        // TODO: Use solcVersion configured on project here
+        solcVersion: '0.5.10',
+        scanId: scan.id,
+        files: input.files,
+      });
+      const aiResult = await this.aiService.generateInsightsFromScanResult(
+        input.files,
+        scanResult,
+      );
+      await this.prismaService.projectScan.update({
+        where: {
+          id: scan.id,
+        },
+        data: {
+          output: {
+            providers: scanResult.providers,
+            insights: aiResult.insights,
+          } as unknown as Prisma.JsonObject,
+          status: 'COMPLETED',
+        },
+      });
+    } catch (error) {
+      await this.prismaService.projectScan.update({
+        where: {
+          id: scan.id,
+        },
+        data: {
+          output: {
+            error: error.message,
+          } as unknown as Prisma.JsonObject,
+          status: 'ERROR',
+        },
+      });
+    }
     return scan;
   }
 

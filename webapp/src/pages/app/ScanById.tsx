@@ -92,7 +92,6 @@ export const ScanById: FC<ScanByIdProps> = () => {
   if (!projectScan) {
     return;
   }
-  console.log(fileLineImpact);
   return (
     <AppLayout container={false}>
       <div className="border rounded shadow-sm bg-white hover:bg-slate-50 hover:cursor-pointer">
@@ -111,6 +110,16 @@ export const ScanById: FC<ScanByIdProps> = () => {
           <ProjectScanStats projectScan={projectScan} />
         </div>
       </div>
+      {projectScan.status === "ERROR" && projectScan?.output?.error && (
+        <div className="m-4 p-8 bg-white border rounded ">
+          <div className="text-red-500 text-lg mb-2">
+            Code could not be scanned due to compilation error:
+          </div>
+          <SyntaxHighlighter style={a11yDark}>
+            {projectScan.output.error}
+          </SyntaxHighlighter>
+        </div>
+      )}
       {["SCHEDULED", "RUNNING"].includes(projectScan.status) && (
         <div className="m-4 p-20 bg-white border rounded text-center">
           <div>

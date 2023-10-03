@@ -53,16 +53,23 @@ export class SlitherProvider extends ScannerBaseProvider {
   }
 
   async execSlither() {
+    const { solcVersion } = this.input;
     try {
-      const { solcVersion } = this.input;
       await exec(
         `slither ./contracts --json output.json --solc=../../../compilers/tron/solc.js --solc-args="--solc-version ${solcVersion}"`,
         {
           cwd: this.getScanFolder(),
         },
       );
-    } catch (e) {
-      console.log(e);
+    } catch (error) { }
+    const compilationOutputJson = await fs.readFile(
+      path.join(this.getScanFolder(), 'compilationOutput.json'),
+      'utf8',
+    );
+    const compilationOutput = JSON.parse(compilationOutputJson);
+    if (compilationOutput.errors && compilationOutput.errors.length > 0) {
+      const errorMessage = compilationOutput.errors.map((error) => `- ${error.formattedMessage}`).join('\n');
+      throw new Error(`TRON solc v${solcVersion}\n\nCompilation Failed:\n\n${errorMessage}`);
     }
     const outputJson = await fs.readFile(
       path.join(this.getScanFolder(), 'output.json'),
