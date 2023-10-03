@@ -25,7 +25,7 @@ const Step: FC<{
   );
 };
 
-export const AppProjectsSetup: FC<AppProjectsSetupProps> = (props) => {
+export const AppProjectsSetup: FC<AppProjectsSetupProps> = () => {
   const { projectId } = useParams();
   const { data } = useQuery({
     queryKey: ["projectById", projectId],

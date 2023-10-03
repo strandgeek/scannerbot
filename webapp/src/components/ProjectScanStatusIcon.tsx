@@ -1,5 +1,5 @@
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
-import React, { FC } from "react";
+import { FC } from "react";
 
 export interface ProjectScanStatusIconProps {
   status: string;

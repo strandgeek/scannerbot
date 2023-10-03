@@ -6,7 +6,7 @@ import { ProjectScanCard } from "../../components/ProjectScanCard";
 
 export interface ScansProps {}
 
-export const Scans: FC<ScansProps> = (props) => {
+export const Scans: FC<ScansProps> = () => {
   const { data: projectScansData } = useQuery({
     queryKey: ["project-scans"],
     queryFn: () => getProjectScans(),

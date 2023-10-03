@@ -15,7 +15,7 @@ export interface CreateProjectVars {
   name: string;
 }
 
-export const AppProjectsCreate: FC<AppProjectsCreateProps> = (props) => {
+export const AppProjectsCreate: FC<AppProjectsCreateProps> = () => {
   const navigate = useNavigate();
   const form = useForm<CreateProjectVars>();
   const createPostMutation = useMutation({
