@@ -1,2 +1,3 @@
 *.sol
 node_modules
+.env

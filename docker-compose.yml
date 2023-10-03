@@ -1,0 +1,48 @@
+services:
+  db:
+    container_name: scannerbot-db
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: scannerbot
+      POSTGRESQL_FSYNC: "off"
+      PGDATA: /data/postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./db-data:/data/postgres
+    restart: unless-stopped
+  api:
+    container_name: scannerbot-api
+    image: scannerbot-api
+    build:
+      context: ./api
+    environment:
+      - PROJECT_URL=http://localhost:3000
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/scannerbot?schema=public
+      - JWT_SECRET=YOUR_SECRET_KEY_HERE
+      - OPENAI_API_KEY=YOUR_API_KEY_HERE
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./tmp:/usr/src/app/tmp
+  webapp:
+    container_name: scannerbot-webapp
+    image: scannerbot-webapp
+    build:
+      context: ./webapp
+  nginx:
+    container_name: scannerbot-nginx
+    image: scannerbot-nginx
+    build:
+      context: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - api
+      - webapp

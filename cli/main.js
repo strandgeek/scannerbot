@@ -24,7 +24,7 @@ const client = axios.create({
   baseURL: (yargs.argv["base-url"] || BASE_URL) + "/api",
 });
 
-const solFilePaths = globSync("**/*.sol");
+const solFilePaths = globSync("./contracts/**/*.sol");
 const total = solFilePaths.length;
 
 console.log(chalk.cyan(`Scanning ${total} file${total > 1 ? "s" : ""}:`));
@@ -44,7 +44,7 @@ client
   .then((res) => {
     console.log(chalk.green("Scan execution is processing\n"));
     console.log(
-      "You can follow the scan progress at this link: " +
+      "You can track the scan progress at this link: " +
         chalk.bold(res.data.url) +
         "\n"
     );
