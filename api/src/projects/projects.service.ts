@@ -12,11 +12,12 @@ export class ProjectsService {
   constructor(private prismaService: PrismaService) { }
 
   create(ownerId: string, createProjectDto: CreateProjectDto) {
-    const { name } = createProjectDto;
+    const { name, solcVersion } = createProjectDto;
     const projectToken = generateProjectToken();
     return this.prismaService.project.create({
       data: {
         name,
+        solcVersion,
         ownerId,
         projectToken,
       },
@@ -31,6 +32,9 @@ export class ProjectsService {
           ...filter,
           ownerId,
         },
+        orderBy: {
+          name: 'asc',
+        }
       },
       opts: opts,
     });

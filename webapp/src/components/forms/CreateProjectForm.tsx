@@ -1,8 +1,10 @@
 import { Form, FormProps } from "../Form";
 import { TextFormInput } from "./inputs/TextFormInput";
+import { TronSolcVersionInput } from "./inputs/TronSolcVersionInput";
 
 export interface CreateProjectFormFields {
   name: string;
+  solcVersion: string;
 }
 
 export interface CreateProjectFormProps
@@ -28,6 +30,7 @@ export function CreateProjectForm({
   return (
     <Form form={form} onSubmit={onSubmit}>
       <TextFormInput name="name" label="Name" type="text" />
+      <TronSolcVersionInput name="solcVersion" label="TRON solc version" />
       {footer}
     </Form>
   );

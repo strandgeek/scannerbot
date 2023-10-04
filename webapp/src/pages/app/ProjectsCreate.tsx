@@ -13,11 +13,16 @@ export interface AppProjectsCreateProps {}
 
 export interface CreateProjectVars {
   name: string;
+  solcVersion: string;
 }
 
 export const AppProjectsCreate: FC<AppProjectsCreateProps> = () => {
   const navigate = useNavigate();
-  const form = useForm<CreateProjectVars>();
+  const form = useForm<CreateProjectVars>({
+    defaultValues: {
+      solcVersion: "0.8.18",
+    },
+  });
   const createPostMutation = useMutation({
     mutationKey: ["createProject"],
     mutationFn: (args: CreateProjectVars) => createProject(args),

@@ -39,21 +39,8 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
         </div>
       </div>
       <div className="p-4 border-t">
-        <div className="w-full flex">
-          <Link
-            className="flex items-center text-blue-500"
-            to={`/app/scans?projectId=${project.id}`}
-          >
-            <DocumentMagnifyingGlassIcon className="w-4 h-4" />
-            <div className="text-sm ml-1">{info?.total}</div>
-          </Link>
-          <div className="text-base-content/50 ml-2 mr-2">•</div>
-          <Link
-            className="flex items-center text-blue-500"
-            to={`/app/scans/${info?.lastScanId || ""}`}
-          >
-            <div className="text-sm">View Last Scan</div>
-          </Link>
+        <div className="w-full flex text-base-content/50">
+          TRON solc version: {project.solcVersion}
         </div>
       </div>
     </div>

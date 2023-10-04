@@ -21,9 +21,10 @@ export class ProjectsController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  create(@LoggedUser() user: User, @Body() { name }: CreateProjectDto) {
+  create(@LoggedUser() user: User, @Body() { name, solcVersion }: CreateProjectDto) {
     return this.projectsService.create(user.id, {
       name,
+      solcVersion,
     });
   }
 

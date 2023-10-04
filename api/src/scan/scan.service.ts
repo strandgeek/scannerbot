@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { ScanInput } from './scan.types';
-import { Prisma } from '@prisma/client';
+import { Prisma, Project } from '@prisma/client';
 import { PaginatorOptions, paginator } from 'src/common/helpers/paginator';
 import { ScannerService } from 'src/scanner/scanner.service';
 import { AiService } from 'src/ai/ai.service';
@@ -14,15 +14,15 @@ export class ScanService {
     private aiService: AiService,
   ) { }
   async createScan({
-    projectId,
+    project,
     input,
   }: {
-    projectId: string;
+    project: Project;
     input: ScanInput;
   }) {
     const scan = await this.prismaService.projectScan.create({
       data: {
-        projectId,
+        projectId: project.id,
         input: input as unknown as Prisma.JsonObject,
         output: {},
         status: 'SCHEDULED',
@@ -31,7 +31,7 @@ export class ScanService {
     try {
       const scanResult = await this.scannerService.scan({
         // TODO: Use solcVersion configured on project here
-        solcVersion: '0.5.10',
+        solcVersion: project.solcVersion,
         scanId: scan.id,
         files: input.files,
       });

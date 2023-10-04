@@ -37,7 +37,7 @@ export class ScanController {
       );
     }
     const projectScan = await this.scanService.createScan({
-      projectId: project.id,
+      project,
       input,
     });
     const baseUrl = process.env.PROJECT_URL || 'https://scannerbot.xyz';
