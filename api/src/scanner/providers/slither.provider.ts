@@ -68,8 +68,10 @@ export class SlitherProvider extends ScannerBaseProvider {
     );
     const compilationOutput = JSON.parse(compilationOutputJson);
     if (compilationOutput.errors && compilationOutput.errors.length > 0) {
-      const errorMessage = compilationOutput.errors.map((error) => `- ${error.formattedMessage}`).join('\n');
-      throw new Error(`TRON solc v${solcVersion}\n\nCompilation Failed:\n\n${errorMessage}`);
+      if (compilationOutput.errors.find(e => e.severity === 'error')) {
+        const errorMessage = compilationOutput.errors.map((error) => `- ${error.formattedMessage}`).join('\n');
+        throw new Error(`TRON solc v${solcVersion}\n\nCompilation Failed:\n\n${errorMessage}`);
+      }
     }
     const outputJson = await fs.readFile(
       path.join(this.getScanFolder(), 'output.json'),
