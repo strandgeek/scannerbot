@@ -262,7 +262,7 @@ export function IndexPage() {
             </p>
             <div>
               <div className="bg-black text-white mt-12 w-full p-3 rounded-lg text-sm">
-                npx @scannerbot/cli --project-token{" "}
+                npx -y @scannerbot/cli@latest --project-token{" "}
                 <strong className="text-white">YOUR-PROJECT-TOKEN</strong>
               </div>
             </div>

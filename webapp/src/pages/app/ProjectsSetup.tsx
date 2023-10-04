@@ -63,7 +63,7 @@ export const AppProjectsSetup: FC<AppProjectsSetupProps> = () => {
           lookup for all <code>.sol</code> files (recursively) from your current
           directory.
           <div className="bg-black text-white mt-4 w-full p-3 rounded-lg text-sm">
-            npx @scannerbot/cli --project-token{" "}
+            npx @scannerbot/cli@latest --project-token{" "}
             <strong className="text-white">{data?.projectToken}</strong>
           </div>
           <div className="alert mt-2">

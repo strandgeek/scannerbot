@@ -10,19 +10,15 @@ COPY package*.json ./
 # Install app dependencies
 RUN npm install
 
-
 # Install slither
 RUN pip3 install slither-analyzer
-
-# TODO: Remove it when TRON solc is fully functional to be replaced
-RUN pip3 install py-solc
-
-# TODO: Make available all versions
-RUN solc-select install 0.5.10
 
 # Bundle app source
 COPY . .
 RUN npx prisma generate
+
+# Install TRON solc dependencies
+RUN cd ./compilers/tron && npm i
 
 # Creates a "dist" folder with the production build
 RUN npm run build
