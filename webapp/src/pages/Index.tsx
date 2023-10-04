@@ -1,4 +1,4 @@
-import { ChevronRightIcon, StarIcon } from "@heroicons/react/20/solid";
+import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import Logo from "../assets/scannerbot-logo.png";
 import AppScreenshot from "../assets/app-screenshot.png";
 import PipelineScreenshot from "../assets/screenshot-pipeline.png";
@@ -281,7 +281,7 @@ export function IndexPage() {
             className="-mx-5 -my-2 flex flex-wrap justify-center"
             aria-label="Footer"
           >
-            {footerNavigation.main.map((item) => (
+            {footerNavigation.main.map((item: any) => (
               <div key={item.name} className="px-5 py-2">
                 <a
                   href={item.href}

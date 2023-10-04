@@ -1,6 +1,5 @@
 import {
   CodeBracketIcon,
-  DocumentMagnifyingGlassIcon,
   EllipsisVerticalIcon,
 } from "@heroicons/react/24/outline";
 import { FC } from "react";
@@ -14,7 +13,7 @@ export interface ProjectCardProps {
 }
 
 export const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
-  const { data: info } = useQuery({
+  useQuery({
     queryKey: ["project-scans-info", project.id],
     queryFn: () => getProjectScansInfo(project.id),
   });

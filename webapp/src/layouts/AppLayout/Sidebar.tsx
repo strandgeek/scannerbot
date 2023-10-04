@@ -1,7 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import {
   BriefcaseIcon,
-  Cog6ToothIcon,
   DocumentMagnifyingGlassIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
