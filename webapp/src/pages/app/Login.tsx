@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import LogoSrc from "../../assets/scannerbot-logo-with-slogan.png";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../client/mutations/login";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PATHS } from "../../consts/paths";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
@@ -34,6 +34,12 @@ export const AppLoginPage: FC = () => {
       </div>
       <div className="max-w-xl mx-auto border p-8 mt-8 rounded-md">
         <LoginForm form={form} onSubmit={onSubmit} />
+        <div className="text-center mt-6">
+          Don't have an account?{" "}
+          <Link to="/app/signup" className="text-blue-500">
+            Signup
+          </Link>
+        </div>
       </div>
     </div>
   );

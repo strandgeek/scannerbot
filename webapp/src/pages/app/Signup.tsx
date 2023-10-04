@@ -10,7 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createUser } from "../../client/mutations/users";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PATHS } from "../../consts/paths";
 
 export const AppSignupPage: FC = () => {
@@ -37,6 +37,12 @@ export const AppSignupPage: FC = () => {
       </div>
       <div className="max-w-xl mx-auto border p-8 mt-8 rounded-md">
         <SignupForm form={form} onSubmit={onSubmit} />
+        <div className="text-center mt-6">
+          Already have an account?{" "}
+          <Link to="/app/login" className="text-blue-500">
+            Login
+          </Link>
+        </div>
       </div>
     </div>
   );
