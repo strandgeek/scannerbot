@@ -1,10 +1,23 @@
-import { FC } from 'react'
-import { AppLayout } from '../../layouts/AppLayout'
+import { FC, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getMe } from "../../client/queries/auth";
+import { useNavigate } from "react-router-dom";
 
 export const AppIndexPage: FC = () => {
-  return (
-    <AppLayout>
-      App Page Example
-    </AppLayout>
-  )
-}
+  const navigate = useNavigate();
+  const { data: meData, isLoading } = useQuery({
+    queryKey: ["me"],
+    queryFn: () => getMe(),
+    retry: false,
+  });
+  useEffect(() => {
+    if (!isLoading) {
+      if (meData) {
+        navigate("/app/scans");
+      } else {
+        navigate("/app/login");
+      }
+    }
+  }, [meData, isLoading]);
+  return null;
+};

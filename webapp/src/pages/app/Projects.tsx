@@ -22,6 +22,14 @@ export const AppProjectsPage: FC = () => {
           </Link>
         </div>
       </div>
+      {projectsData?.data.length === 0 && (
+        <div className="border-dashed border-2 border-gray-300 rounded text-center p-24 text-gray-500">
+          <div>No project created yet</div>
+          <Link to="/app/projects/create" className="btn btn-primary mt-4">
+            Create a Project
+          </Link>
+        </div>
+      )}
       {projectsData?.data.map((project) => (
         <div className="mt-4">
           <ProjectCard project={project} />

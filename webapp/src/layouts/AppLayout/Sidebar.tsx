@@ -8,7 +8,10 @@ import {
 import React, { FC, Fragment } from "react";
 import LogoSrc from "../../assets/scannerbot-logo-dark.png";
 import classNames from "classnames";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getMe } from "../../client/queries/auth";
+import { EllipsisVerticalIcon, UserIcon } from "@heroicons/react/20/solid";
 
 export interface SidebarProps {
   open: boolean;
@@ -26,15 +29,24 @@ const navigation = [
     path: "/app/projects",
     icon: BriefcaseIcon,
   },
-  {
-    name: "Settings",
-    path: "/app/settings",
-    icon: Cog6ToothIcon,
-  },
+  // {
+  //   name: "Settings",
+  //   path: "/app/settings",
+  //   icon: Cog6ToothIcon,
+  // },
 ];
 
 export const Sidebar: FC<SidebarProps> = ({ open, setOpen }) => {
+  const { data: meData } = useQuery({
+    queryKey: ["me"],
+    queryFn: () => getMe(),
+  });
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
   const renderMenuContent = () => {
     return (
       <>
@@ -63,8 +75,28 @@ export const Sidebar: FC<SidebarProps> = ({ open, setOpen }) => {
             ))}
           </nav>
         </div>
-        <div className="flex-shrink-0 flex bg-primary-focus p-4 text-white">
-          TODO: Add User Info
+        <div className="bg-primary-focus p-4 text-white flex justify-between">
+          <div className="flex items-center">
+            <div className="rounded-full bg-gray-600 p-1 mr-2">
+              <UserIcon className="w-4 h-4" />
+            </div>
+            {meData?.firstName}{" "}
+          </div>
+          <div className="dropdown dropdown-right dropdown-end">
+            <label tabIndex={0} className="btn btn-sm btn-ghost btn-square">
+              <EllipsisVerticalIcon className="w-4 h-4" />
+            </label>
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[1] menu p-2 shadow bg-primary rounded-box w-52"
+            >
+              <li className="hover:text-white">
+                <a className="hover:text-white" onClick={logout}>
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </>
     );

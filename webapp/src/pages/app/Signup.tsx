@@ -24,7 +24,7 @@ export const AppSignupPage: FC = () => {
     try {
       const { token } = await createUserMutation.mutateAsync(data);
       localStorage.setItem("token", token);
-      navigate(PATHS.app);
+      navigate(PATHS.appProjectsCreate);
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
       toast.error(err?.response?.data?.message || "Internal Server Error");
