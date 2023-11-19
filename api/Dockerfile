@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install app dependencies
-RUN npm install
+RUN npm ci --verbose
 
 # Install slither
 RUN pip3 install slither-analyzer
