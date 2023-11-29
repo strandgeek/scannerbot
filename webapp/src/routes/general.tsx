@@ -11,6 +11,8 @@ import { AppProjectsCreate } from "../pages/app/ProjectsCreate";
 import { AppProjectsSetup } from "../pages/app/ProjectsSetup";
 import { Scans } from "../pages/app/Scans";
 import { ScanById } from "../pages/app/ScanById";
+import { Subscription } from "../pages/app/Subscription";
+import { SubscriptionCompleted } from "../pages/app/SubscriptionCompleted";
 
 export const general: RouteObject[] = [
   // ROUTES - START
@@ -29,6 +31,14 @@ export const general: RouteObject[] = [
   {
     path: PATHS.appSignup,
     element: <AppSignupPage />,
+  },
+  {
+    path: "/app/subscription",
+    element: <Subscription />,
+  },
+  {
+    path: "/app/subscription/completed",
+    element: <SubscriptionCompleted />,
   },
   {
     path: "/app/projects",

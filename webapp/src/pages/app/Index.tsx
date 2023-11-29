@@ -13,7 +13,7 @@ export const AppIndexPage: FC = () => {
   useEffect(() => {
     if (!isLoading) {
       if (meData) {
-        navigate("/app/scans");
+        navigate(meData.subscription ? "/app/scans" : "/app/subscription");
       } else {
         navigate("/app/login");
       }

@@ -3,4 +3,9 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
+  subscription?: {
+    id: string;
+    startDate: string;
+    endDate: string;
+  } | null;
 }
