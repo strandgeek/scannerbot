@@ -4,6 +4,7 @@ const wrapper = require('solc/wrapper');
 const { globSync } = require('glob');
 const yargs = require('yargs');
 const fs = require('fs');
+const path = require('path');
 const {
   replaceSubdenominationWithValue,
 } = require('./utils/replaceSubdenomination');
@@ -55,6 +56,16 @@ solFilePaths.forEach((path) => {
   };
 });
 
+function findImports(relativePath) {
+  try {
+    const absolutePath = path.resolve('./contracts', relativePath);
+    const source = fs.readFileSync(absolutePath, 'utf8');
+    return { contents: source };
+  } catch (error) {
+    return { error: error.message };
+  }
+}
+
 const input = {
   language: 'Solidity',
   sources,
@@ -68,7 +79,9 @@ const input = {
   },
 };
 
-const output = JSON.parse(solc.compile(JSON.stringify(input)));
+const output = JSON.parse(
+  solc.compile(JSON.stringify(input), { import: findImports }),
+);
 
 fs.writeFileSync('compilationOutput.json', JSON.stringify(output, null, 4));
 
