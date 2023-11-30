@@ -13,6 +13,8 @@ import { Scans } from "../pages/app/Scans";
 import { ScanById } from "../pages/app/ScanById";
 import { Subscription } from "../pages/app/Subscription";
 import { SubscriptionCompleted } from "../pages/app/SubscriptionCompleted";
+import { TermsOfService } from "../pages/TermsOfService";
+import { PrivacyPolicy } from "../pages/PrivacyPolicy";
 
 export const general: RouteObject[] = [
   // ROUTES - START
@@ -59,6 +61,14 @@ export const general: RouteObject[] = [
   {
     path: "/app/scans/:scanId",
     element: <ScanById />,
+  },
+  {
+    path: "terms-of-service",
+    element: <TermsOfService />,
+  },
+  {
+    path: "privacy-policy",
+    element: <PrivacyPolicy />,
   },
   // ROUTES - END
 ];

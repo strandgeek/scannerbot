@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import React, { FC, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { generateSubscriptionLink } from "../../client/mutations/billing";
 
 export interface SubscriptionProps {}
 
-export const Subscription: FC<SubscriptionProps> = (props) => {
+export const Subscription: FC<SubscriptionProps> = () => {
   const generateLinkMutation = useMutation({
     mutationFn: generateSubscriptionLink,
   });

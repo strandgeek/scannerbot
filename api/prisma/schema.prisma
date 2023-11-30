@@ -49,13 +49,14 @@ enum ProjectScanStatus {
 }
 
 model BillingUserSubscription {
-  id           String   @id @default(uuid())
-  userId       String   @unique
-  user         User     @relation(fields: [userId], references: [id])
-  stripeId     String
-  stripeStatus String
-  startDate    DateTime @default(now())
-  endDate      DateTime
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id])
+  stripeId         String   @unique
+  stripeCustomerId String
+  stripeStatus     String
+  startDate        DateTime @default(now())
+  endDate          DateTime
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }

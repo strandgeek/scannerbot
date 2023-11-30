@@ -6,5 +6,6 @@ export interface Me {
     id: string;
     startDate: string;
     endDate: string;
+    stripeStatus: string;
   } | null;
 }

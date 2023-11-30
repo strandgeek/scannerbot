@@ -26,6 +26,7 @@ export class UsersService {
             createdAt: true,
             updatedAt: true,
             endDate: true,
+            stripeStatus: true,
           }
         }
       }

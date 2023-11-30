@@ -8,9 +8,10 @@ import React, { FC, Fragment } from "react";
 import LogoSrc from "../../assets/scannerbot-logo-dark.png";
 import classNames from "classnames";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getMe } from "../../client/queries/auth";
 import { EllipsisVerticalIcon, UserIcon } from "@heroicons/react/20/solid";
+import { generateBillingPortalLink } from "../../client/mutations/billing";
 
 export interface SidebarProps {
   open: boolean;
@@ -36,15 +37,23 @@ const navigation = [
 ];
 
 export const Sidebar: FC<SidebarProps> = ({ open, setOpen }) => {
+  const mode = import.meta.env.VITE_SCANNERBOT_MODE;
   const { data: meData } = useQuery({
     queryKey: ["me"],
     queryFn: () => getMe(),
+  });
+  const generateBillingPortalLinkMutation = useMutation({
+    mutationFn: generateBillingPortalLink,
   });
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const logout = () => {
     localStorage.clear();
     navigate("/");
+  };
+  const goToBillingPortal = async () => {
+    const { url } = await generateBillingPortalLinkMutation.mutateAsync();
+    window.location.href = url;
   };
   const renderMenuContent = () => {
     return (
@@ -90,6 +99,11 @@ export const Sidebar: FC<SidebarProps> = ({ open, setOpen }) => {
               className="dropdown-content z-[1] menu p-2 shadow bg-primary rounded-box w-52"
             >
               <li className="hover:text-white">
+                {mode === "cloud" && (
+                  <a className="hover:text-white" onClick={goToBillingPortal}>
+                    Manage Subscription
+                  </a>
+                )}
                 <a className="hover:text-white" onClick={logout}>
                   Logout
                 </a>

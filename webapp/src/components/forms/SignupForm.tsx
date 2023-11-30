@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Form, FormProps } from "../Form";
 import { TextFormInput } from "./inputs/TextFormInput";
 
@@ -19,11 +20,17 @@ export function SignupForm({
   footer = (
     <div className="mt-2 flex justify-end">
       <button
-        className="btn btn-primary btn-block"
+        className="btn btn-primary btn-block flex"
         type="submit"
         disabled={!form.formState.isDirty}
       >
-        Create Account
+        {import.meta.env.VITE_SCANNERBOT_MODE === "cloud" ? (
+          <>
+            Signup & Proceed to Checkout <ArrowRightIcon className="w-5 h-5" />
+          </>
+        ) : (
+          <span>Sign up for free</span>
+        )}
       </button>
     </div>
   ),

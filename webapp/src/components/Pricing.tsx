@@ -6,7 +6,15 @@ const tiers = [
   {
     id: "community",
     name: "Community Edition (CE)",
-    href: "#",
+    linkEl: (
+      <a
+        href="https://github.com/strandgeek/scannerbot"
+        className="inline-block w-full rounded-lg bg-rose-500 px-4 py-2.5 text-center text-sm font-semibold leading-5 text-white shadow-md hover:bg-rose-700"
+        aria-describedby="community"
+      >
+        View GitHub Project
+      </a>
+    ),
     priceMonthly: 0,
     description: "Deploy the Open-Source version on your host",
     features: ["Unlimited Projects", "Unlimited Scans"],
@@ -14,7 +22,15 @@ const tiers = [
   {
     id: "premium",
     name: "Premium (Cloud)",
-    href: "#",
+    linkEl: (
+      <Link
+        to="/app/signup"
+        className="inline-block w-full rounded-lg bg-rose-500 px-4 py-2.5 text-center text-sm font-semibold leading-5 text-white shadow-md hover:bg-rose-700"
+        aria-describedby="premium"
+      >
+        Get Started (30 days Free Trial)
+      </Link>
+    ),
     priceMonthly: 47,
     description: "Use our Cloud infrastructure.",
     features: [
@@ -92,15 +108,7 @@ export function Pricing() {
                           </li>
                         ))}
                       </ul>
-                      <div className="mt-8">
-                        <Link
-                          to="/app/signup"
-                          className="inline-block w-full rounded-lg bg-rose-500 px-4 py-2.5 text-center text-sm font-semibold leading-5 text-white shadow-md hover:bg-rose-700"
-                          aria-describedby={tier.id}
-                        >
-                          Get started today
-                        </Link>
-                      </div>
+                      <div className="mt-8">{tier.linkEl}</div>
                     </div>
                   </div>
                 </div>

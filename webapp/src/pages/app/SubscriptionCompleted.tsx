@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export interface SubscriptionProps {}
 
-export const SubscriptionCompleted: FC<SubscriptionProps> = (props) => {
+export const SubscriptionCompleted: FC<SubscriptionProps> = () => {
   const navigate = useNavigate();
   const { data: meData } = useQuery({
     queryKey: ["me"],

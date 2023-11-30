@@ -35,4 +35,11 @@ export class BillingController {
     const url = await this.billingService.generateSubscriptionLink(user);
     return { url };
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/generate-billing-portal-link')
+  async generateBillingPortalLink(@LoggedUser() user: User) {
+    const url = await this.billingService.generateBillingPortalLink(user);
+    return { url };
+  }
 }

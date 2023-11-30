@@ -37,6 +37,24 @@ export const AppSignupPage: FC = () => {
       </div>
       <div className="max-w-xl mx-auto border p-8 mt-8 rounded-md">
         <SignupForm form={form} onSubmit={onSubmit} />
+        <div className="text-sm text-center mt-4">
+          By continuing, you agree with the{" "}
+          <Link
+            to="/terms-of-service"
+            target="_blank"
+            className="text-primary font-bold"
+          >
+            Terms of Service
+          </Link>{" "}
+          and{" "}
+          <Link
+            to="/privacy-policy"
+            target="_blank"
+            className="text-primary font-bold"
+          >
+            Privacy Policy
+          </Link>
+        </div>
         <div className="text-center mt-6">
           Already have an account?{" "}
           <Link to="/app/login" className="text-blue-500">
