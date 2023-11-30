@@ -11,9 +11,10 @@ import { AiModule } from './ai/ai.module';
 import { BillingModule } from './billing/billing.module';
 import { RawBodyMiddleware } from './common/middlewares/raw-body.middleware';
 import { JsonBodyMiddleware } from './common/middlewares/json-body.mddleware';
+import { MailerModule } from './mailer/mailer.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, ProjectsModule, ScanModule, AiModule, BillingModule],
+  imports: [AuthModule, UsersModule, ProjectsModule, ScanModule, AiModule, BillingModule, MailerModule],
   controllers: [AppController],
   providers: [PrismaService, AppService, AiService],
 })

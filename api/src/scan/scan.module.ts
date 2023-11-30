@@ -5,10 +5,11 @@ import { ProjectsModule } from 'src/projects/projects.module';
 import { PrismaService } from 'src/prisma.service';
 import { ScannerService } from 'src/scanner/scanner.service';
 import { AiModule } from 'src/ai/ai.module';
+import { MailerService } from 'src/mailer/mailer.service';
 
 @Module({
   controllers: [ScanController],
-  providers: [PrismaService, ScanService, ScannerService],
+  providers: [PrismaService, ScanService, ScannerService, MailerService],
   imports: [ProjectsModule, AiModule],
 })
 export class ScanModule { }
